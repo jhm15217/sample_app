@@ -21,12 +21,20 @@ class UsersController < ApplicationController
       redirect_to home
     else
       @user = User.new(params[:user])
-      if @user.save
-        sign_in @user
-        flash[:success] = "Welcome to the Sample App!"
-        redirect_to @user
-      else
-        render 'new'
+
+      respond_to do |format|
+        if @user.save
+          # Tell the UserMailer to send a welcome Email after save
+          flash[:success] = "Welcome to the Sample App!"
+          sign_in @user
+          UserMailer.welcome_email(@user).deliver
+
+          format.html { redirect_to(@user) }
+          format.json { render json: @user, status: :created, location: @user }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
