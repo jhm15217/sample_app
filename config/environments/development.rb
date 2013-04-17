@@ -18,8 +18,8 @@ SampleApp::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :domain               => 'baci.lindsaar.net',
-    :user_name            => 'james.morris@gmail.com',
+    :domain               => 'gmail.com',
+    :user_name            => 'james.morris',
     :password             => 'psomgma2',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
